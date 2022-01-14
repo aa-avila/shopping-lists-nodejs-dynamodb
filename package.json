@@ -1,0 +1,31 @@
+{
+  "name": "shopping-lists-nodejs-dynamodb",
+  "version": "1.0.0",
+  "description": "API REST para administración de listas de compras. NodeJS / Express + DynamoDB (AWS SDK)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aa-avila/shopping-lists-nodejs-dynamodb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aa-avila/shopping-lists-nodejs-dynamodb/issues"
+  },
+  "homepage": "https://github.com/aa-avila/shopping-lists-nodejs-dynamodb#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^11.0.0",
+    "express": "^4.17.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
