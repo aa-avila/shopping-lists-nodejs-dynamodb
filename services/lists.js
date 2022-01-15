@@ -1,12 +1,12 @@
 const listsRepository = require('../repositories/lists');
 
 const getAll = async () => {
-  const response = [];
+  const response = await listsRepository.getAll();
   return response;
 };
 
 const getById = async (id) => {
-  const response = [];
+  const response = await listsRepository.getById();
   return response;
 };
 
