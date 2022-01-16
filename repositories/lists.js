@@ -84,9 +84,7 @@ const remove = async (id) => {
     }
   };
 
-  const response = await db.deleteItem(params);
-  console.log(response);
-  return response;
+  return await db.deleteItem(params);
 };
 
 module.exports = {
