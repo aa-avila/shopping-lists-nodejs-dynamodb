@@ -38,9 +38,24 @@ const create = async (data) => {
   return await listsRepository.create(params);
 };
 
-const update = async (id, listData) => {
-  const response = [];
-  return response;
+const update = async (id, data) => {
+  const params = {
+    TableName: TABLE_NAME,
+    Key: {
+      id: { S: id }
+    },
+    UpdateExpression: 'SET title = :t, archived = :a, updatedAt = :u',
+    ExpressionAttributeValues: {
+      ':t': { S: data.title },
+      ':a': { BOOL: data.archived },
+      ':u': { S: new Date().toISOString() }
+    },
+    ReturnValues: 'ALL_NEW'
+  };
+
+  const updatedItem = await listsRepository.update(params);
+
+  return unmarshall(updatedItem.Attributes);
 };
 
 const remove = async (id) => {

@@ -12,8 +12,9 @@ const create = async (params) => {
   return await db.putItem(params);
 };
 
-const update = async (id, data) => {
-  const response = [];
+const update = async (params) => {
+  const response = await db.updateItem(params);
+  console.log(response);
   return response;
 };
 
