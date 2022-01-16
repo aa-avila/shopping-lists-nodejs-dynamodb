@@ -1,7 +1,4 @@
 const listsRepository = require('../repositories/lists');
-const TABLE_NAME = 'Lists';
-const { marshall, unmarshall } = require('../db/utils');
-const { v4: uuid } = require('uuid');
 
 const getAll = async () => {
   return await listsRepository.getAll();
