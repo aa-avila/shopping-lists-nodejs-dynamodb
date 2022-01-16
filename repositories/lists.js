@@ -15,9 +15,9 @@ const getAll = async () => {
 const getById = async (id) => {
   const params = {
     TableName: TABLE_NAME,
-    Key: marshall({
-      id: id
-    })
+    Key: {
+      id: { S: id }
+    }
   };
 
   const { Item } = await db.getItem(params);
@@ -38,9 +38,9 @@ const create = async (data) => {
   // por lo tanto, es mas conveniente usar updateItem (si no existe elemento, lo crea y devuelve mediante ReturnValues ALL_NEW)
   const params = {
     TableName: TABLE_NAME,
-    Key: marshall({
-      id: uuid()
-    }),
+    Key: {
+      id: { S: uuid() }
+    },
     UpdateExpression:
       'SET title = :t, archived = :a, createdAt = :c, updatedAt = :u, products = :p',
     ExpressionAttributeValues: marshall({
@@ -60,9 +60,9 @@ const create = async (data) => {
 const update = async (id, data) => {
   const params = {
     TableName: TABLE_NAME,
-    Key: marshall({
-      id: id
-    }),
+    Key: {
+      id: { S: id }
+    },
     UpdateExpression: 'SET title = :t, archived = :a, updatedAt = :u',
     ExpressionAttributeValues: marshall({
       ':t': data.title,
