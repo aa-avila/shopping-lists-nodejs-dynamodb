@@ -14,7 +14,6 @@ const create = async (params) => {
 
 const update = async (params) => {
   const response = await db.updateItem(params);
-  console.log(response);
   return response;
 };
 
