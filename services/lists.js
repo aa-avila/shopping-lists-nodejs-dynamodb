@@ -20,8 +20,7 @@ const update = async (id, data) => {
 };
 
 const remove = async (id) => {
-  const response = [];
-  return response;
+  return await listsRepository.remove(id);
 };
 
 module.exports = { getAll, getById, create, update, remove };

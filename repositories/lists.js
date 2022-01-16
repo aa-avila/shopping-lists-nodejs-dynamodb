@@ -77,7 +77,15 @@ const update = async (id, data) => {
 };
 
 const remove = async (id) => {
-  const response = [];
+  const params = {
+    TableName: TABLE_NAME,
+    Key: {
+      id: { S: id }
+    }
+  };
+
+  const response = await db.deleteItem(params);
+  console.log(response);
   return response;
 };
 
