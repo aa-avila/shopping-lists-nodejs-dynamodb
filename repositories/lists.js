@@ -1,7 +1,8 @@
 const { db } = require('../db/dynamodb');
 const TABLE_NAME = 'Lists';
 const { marshall, unmarshall } = require('../db/utils');
-const { v4: uuid } = require('uuid');
+// const { v4: uuid } = require('uuid');
+const { ulid } = require('ulidx');
 
 const getAll = async () => {
   const params = {
@@ -39,7 +40,7 @@ const create = async (data) => {
   const params = {
     TableName: TABLE_NAME,
     Key: {
-      id: { S: uuid() }
+      id: { S: ulid() }
     },
     UpdateExpression:
       'SET title = :t, archived = :a, createdAt = :c, updatedAt = :u, products = :p',
