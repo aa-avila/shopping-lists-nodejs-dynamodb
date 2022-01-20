@@ -88,10 +88,76 @@ const remove = async (id) => {
   return await db.deleteItem(params);
 };
 
+//products
+const getProducts = async (listId) => {
+  const params = {
+    TableName: TABLE_NAME,
+    Key: {
+      id: { S: listId }
+    }
+  };
+
+  const { Item } = await db.getItem(params);
+  const products = unmarshall(Item).products;
+
+  return products;
+};
+
+const getProductByid = async (listId, prodId) => {
+  const params = {
+    TableName: TABLE_NAME,
+    Key: {
+      id: { S: listId }
+    }
+  };
+
+  const { Item } = await db.getItem(params);
+  const product = unmarshall(Item).products.map((element) => {
+    if (element.id === prodId) {
+      return element;
+    }
+  });
+
+  return product;
+};
+
+const addProducts = async (listId, data) => {
+  const newProducts = data.map((prod) => {
+    const newProd = {
+      id: ulid(),
+      name: prod.name,
+      quantity: prod.quantity,
+      ticked: false
+    };
+
+    return newProd;
+  });
+
+  const params = {
+    TableName: TABLE_NAME,
+    Key: {
+      id: { S: listId }
+    },
+    UpdateExpression:
+      'SET products = list_append(products, :newPr), updatedAt = :u',
+    ExpressionAttributeValues: marshall({
+      ':newPr': newProducts,
+      ':u': new Date().toISOString()
+    }),
+    ReturnValues: 'ALL_NEW'
+  };
+
+  const updateItem = await db.updateItem(params);
+  return unmarshall(updateItem.Attributes);
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
-  remove
+  remove,
+  getProducts,
+  getProductByid,
+  addProducts
 };

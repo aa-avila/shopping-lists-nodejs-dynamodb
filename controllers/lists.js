@@ -46,10 +46,47 @@ const remove = async (req, res, next) => {
   }
 };
 
+//products
+
+const getProducts = async (req, res, next) => {
+  try {
+    const response = await listsService.getProducts(req.params.listId);
+
+    res.status(200).send(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getProductById = async (req, res, next) => {
+  try {
+    const { listId, prodId } = req.params;
+    const response = await listsService.getProductById(listId, prodId);
+
+    res.status(200).send(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const addProducts = async (req, res, next) => {
+  try {
+    const { listId } = req.params;
+    const response = await listsService.addProducts(listId, req.body);
+
+    res.status(200).send(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
-  remove
+  remove,
+  getProducts,
+  getProductById,
+  addProducts
 };

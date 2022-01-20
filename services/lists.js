@@ -20,4 +20,26 @@ const remove = async (id) => {
   return await listsRepository.remove(id);
 };
 
-module.exports = { getAll, getById, create, update, remove };
+//products
+const getProducts = async (listId) => {
+  return await listsRepository.getProducts(listId);
+};
+
+const getProductById = async (listId, prodId) => {
+  return await listsRepository.getProductById(listId, prodId);
+};
+
+const addProducts = async (listId, data) => {
+  return await listsRepository.addProducts(listId, data);
+};
+
+module.exports = {
+  getAll,
+  getById,
+  create,
+  update,
+  remove,
+  getProducts,
+  getProductById,
+  addProducts
+};
