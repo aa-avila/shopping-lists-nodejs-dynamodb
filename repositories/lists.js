@@ -103,7 +103,7 @@ const getProducts = async (listId) => {
   return products;
 };
 
-const getProductByid = async (listId, prodId) => {
+const getProductById = async (listId, prodId) => {
   const params = {
     TableName: TABLE_NAME,
     Key: {
@@ -112,10 +112,8 @@ const getProductByid = async (listId, prodId) => {
   };
 
   const { Item } = await db.getItem(params);
-  const product = unmarshall(Item).products.map((element) => {
-    if (element.id === prodId) {
-      return element;
-    }
+  const product = unmarshall(Item).products.find((element) => {
+    return element.id === prodId;
   });
 
   return product;
@@ -151,6 +149,49 @@ const addProducts = async (listId, data) => {
   return unmarshall(updateItem.Attributes);
 };
 
+const updateProductById = async (listId, prodId, data) => {
+  const params = {
+    TableName: TABLE_NAME,
+    Key: {
+      id: { S: listId }
+    }
+  };
+
+  const { Item } = await db.getItem(params);
+
+  let productIndex;
+  unmarshall(Item).products.map((element, index) => {
+    if (element.id === prodId) {
+      productIndex = index;
+    }
+  });
+
+  const newProduct = {
+    id: prodId,
+    name: data.name,
+    quantity: data.quantity,
+    ticked: data.ticked
+  };
+
+  const params2 = {
+    TableName: TABLE_NAME,
+    Key: {
+      id: { S: listId }
+    },
+    UpdateExpression: `SET products[${productIndex}] = :newPr, updatedAt = :u`,
+    ConditionExpression: `products[${productIndex}].id = :prId`,
+    ExpressionAttributeValues: marshall({
+      ':newPr': newProduct,
+      ':prId': prodId,
+      ':u': new Date().toISOString()
+    }),
+    ReturnValues: 'ALL_NEW'
+  };
+
+  const updatedItem = await db.updateItem(params2);
+  return unmarshall(updatedItem.Attributes);
+};
+
 module.exports = {
   getAll,
   getById,
@@ -158,6 +199,7 @@ module.exports = {
   update,
   remove,
   getProducts,
-  getProductByid,
-  addProducts
+  getProductById,
+  addProducts,
+  updateProductById
 };

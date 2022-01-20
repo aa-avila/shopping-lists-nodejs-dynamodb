@@ -80,6 +80,21 @@ const addProducts = async (req, res, next) => {
   }
 };
 
+const updateProductById = async (req, res, next) => {
+  try {
+    const { listId, prodId } = req.params;
+    const response = await listsService.updateProductById(
+      listId,
+      prodId,
+      req.body
+    );
+
+    res.status(200).send(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAll,
   getById,
@@ -88,5 +103,6 @@ module.exports = {
   remove,
   getProducts,
   getProductById,
-  addProducts
+  addProducts,
+  updateProductById
 };

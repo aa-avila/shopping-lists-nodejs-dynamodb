@@ -17,10 +17,10 @@ router.get('/:listId/products/:prodId', listsController.getProductById);
 //post add products to a list
 router.post('/:listId/products/', listsController.addProducts);
 
-//put update product of a list
-//router.put('/:listId/products/:productId', listsController.updateProduct);
+//put update one product of a list
+router.put('/:listId/products/:prodId', listsController.updateProductById);
 
 //delete remove product from a list
-//router.delete('/:listId/products/:productId', listsController.removeProduct);
+//router.delete('/:listId/products/:prodId', listsController.removeProduct);
 
 module.exports = router;

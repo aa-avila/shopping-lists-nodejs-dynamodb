@@ -33,6 +33,10 @@ const addProducts = async (listId, data) => {
   return await listsRepository.addProducts(listId, data);
 };
 
+const updateProductById = async (listId, prodId, data) => {
+  return await listsRepository.updateProductById(listId, prodId, data);
+};
+
 module.exports = {
   getAll,
   getById,
@@ -41,5 +45,6 @@ module.exports = {
   remove,
   getProducts,
   getProductById,
-  addProducts
+  addProducts,
+  updateProductById
 };
