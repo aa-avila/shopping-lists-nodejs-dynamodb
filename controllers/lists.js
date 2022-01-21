@@ -95,6 +95,17 @@ const updateProductById = async (req, res, next) => {
   }
 };
 
+const removeProductById = async (req, res, next) => {
+  try {
+    const { listId, prodId } = req.params;
+    const response = await listsService.removeProductById(listId, prodId);
+
+    res.status(200).send(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAll,
   getById,
@@ -104,5 +115,6 @@ module.exports = {
   getProducts,
   getProductById,
   addProducts,
-  updateProductById
+  updateProductById,
+  removeProductById
 };

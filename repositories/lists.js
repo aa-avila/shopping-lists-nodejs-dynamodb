@@ -192,6 +192,38 @@ const updateProductById = async (listId, prodId, data) => {
   return unmarshall(updatedItem.Attributes);
 };
 
+const removeProductById = async (listId, prodId) => {
+  const params = {
+    TableName: TABLE_NAME,
+    Key: {
+      id: { S: listId }
+    }
+  };
+
+  const { Item } = await db.getItem(params);
+
+  let productIndex;
+  unmarshall(Item).products.map((element, index) => {
+    if (element.id === prodId) {
+      productIndex = index;
+    }
+  });
+
+  const params2 = {
+    TableName: TABLE_NAME,
+    Key: {
+      id: { S: listId }
+    },
+    UpdateExpression: `REMOVE products[${productIndex}]`,
+    ConditionExpression: `products[${productIndex}].id = :prId`,
+    ExpressionAttributeValues: marshall({
+      ':prId': prodId
+    })
+  };
+
+  return await db.updateItem(params2);
+};
+
 module.exports = {
   getAll,
   getById,
@@ -201,5 +233,6 @@ module.exports = {
   getProducts,
   getProductById,
   addProducts,
-  updateProductById
+  updateProductById,
+  removeProductById
 };

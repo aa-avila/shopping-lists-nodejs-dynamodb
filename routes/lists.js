@@ -21,6 +21,6 @@ router.post('/:listId/products/', listsController.addProducts);
 router.put('/:listId/products/:prodId', listsController.updateProductById);
 
 //delete remove product from a list
-//router.delete('/:listId/products/:prodId', listsController.removeProduct);
+router.delete('/:listId/products/:prodId', listsController.removeProductById);
 
 module.exports = router;
